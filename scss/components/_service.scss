@@ -1,0 +1,151 @@
+@use "../abstracts";
+
+%flexItemCenter {
+    display: flex;
+    align-items: center;
+}
+
+.service {
+    margin-top: 198px;
+
+    @include abstracts.screen(lg) {
+        margin-top: 70px;
+    }
+
+    &-containers {
+        margin-top: 100px;
+    }
+}
+
+.service-content {
+    @extend %flexItemCenter;
+    justify-content: space-between;
+
+    &__title {
+        width: 35%;
+
+        @include abstracts.screen(xl) {
+            width: 35%;
+        }
+
+        @include abstracts.screen(lg) {
+            width: 55%;
+        }
+
+        @include abstracts.screen(md) {
+            width: 60%;
+        }
+
+        @include abstracts.screen(sm) {
+            width: 100%;
+        }
+
+        &::after {
+            content: "";
+            width: 80px;
+            height: 2px;
+            display: block;
+            margin-top: 20px;
+            background: #000;
+        }
+    }
+}
+
+.service-container {
+    display: block;
+    width: 100%;
+    background: #d8eeff;
+    border-radius: 6px;
+    padding: 40px;
+    transition: 0.25s ease;
+
+    &__img {
+        width: 60px;
+        height: 60px;
+        padding: 8px;
+        border-radius: 10px;
+        background: rgb(15, 181, 217);
+        background: linear-gradient(
+            128deg,
+            rgba(15, 181, 217, 1) 0%,
+            rgba(235, 91, 39, 1) 99%
+        );
+    }
+
+    &__title {
+        margin-top: 150px;
+        color: #0fb5d9;
+        font-size: 2rem;
+        font-weight: 600;
+        line-height: 1.5;
+        transition: 0.8s;
+    }
+
+    &__desc {
+        width: 100%;
+        margin-top: 10px;
+        color: #000;
+        font-size: 1.4rem;
+        font-weight: 500;
+        line-height: 1.71;
+        transition: 0.8s;
+    }
+}
+
+.service-container:hover > .service-container__title {
+    color: #eb5b27;
+}
+
+.service-datas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 100px;
+    padding: 60px 0;
+    border-top: 1px solid #d8eeff;
+    border-bottom: 1px solid #d8eeff;
+
+    @include abstracts.screen(lg) {
+        margin-top: 50px;
+    }
+
+    @include abstracts.screen(md) {
+        grid-template-columns: 1fr;
+        row-gap: 30px;
+    }
+}
+
+.service-data {
+    @extend %flexItemCenter;
+    flex-direction: column;
+    text-align: center;
+
+    &__num {
+        margin-bottom: 20px;
+        color: #0fb5d9;
+        font-size: 4.8rem;
+        font-weight: 600;
+        line-height: 1.21;
+    }
+
+    &__title {
+        margin-bottom: 10px;
+        color: #0fb5d9;
+        font-weight: 600;
+    }
+
+    &__desc {
+        width: 75%;
+        color: #000;
+        font-size: 1.4rem;
+        font-weight: 500;
+        line-height: 1.71;
+    }
+}
+
+.service-data + .service-data {
+    border-left: 1px solid #d8eeff;
+
+    @include abstracts.screen(md) {
+        border-left: none;
+    }
+}

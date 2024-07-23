@@ -1,0 +1,205 @@
+@use "../abstracts";
+
+%flexItemCenter {
+    display: flex;
+    align-items: center;
+}
+
+.feedback {
+    margin-top: 150px;
+
+    @include abstracts.screen(lg) {
+        margin-top: 100px;
+    }
+}
+
+.feedback-content {
+    &__title {
+        text-align: center;
+
+        &::after {
+            content: "";
+            width: 80px;
+            height: 2px;
+            display: block;
+            margin: 30px auto;
+            background-color: #000;
+            border-color: rgba(0, 0, 0, 0);
+        }
+    }
+}
+
+.feedback-top {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 40px;
+    border: 1px solid #a2e9fc;
+    border-radius: 5px;
+
+    @include abstracts.screen(lg) {
+        grid-template-columns: 1fr;
+    }
+
+    &__container {
+        padding: 40px;
+        background: #fff;
+    }
+
+    &__container + &__container {
+        border-left: 1px solid #a2e9fc;
+    }
+
+    &__wrap {
+        @extend %flexItemCenter;
+        gap: 20px;
+    }
+
+    &__avt {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid #0fb5d9;
+    }
+
+    &__name {
+        color: #000;
+        font-weight: 500;
+        line-height: 1.62;
+    }
+
+    &__status {
+        color: #0fb5d9;
+        font-size: 1.3rem;
+        font-weight: 500;
+        line-height: 1.77;
+    }
+
+    &__desc {
+        width: 90%;
+        margin-top: 20px;
+        font-size: 1.4rem;
+        line-height: 1.71;
+    }
+
+    &__rate {
+        @extend %flexItemCenter;
+        padding: 10px 20px;
+        margin-top: 20px;
+        background: #e9f6ff;
+        border-radius: 10px;
+
+        &--bottom {
+            width: 37%;
+            margin: 0 auto;
+            background: #fff;
+
+            @include abstracts.screen(xl) {
+                width: 50%;
+            }
+
+            @include abstracts.screen(lg) {
+                width: 60%;
+            }
+
+            @include abstracts.screen(md) {
+                width: 90%;
+            }
+
+            @include abstracts.screen(sm) {
+                width: 100%;
+            }
+        }
+    }
+
+    &__text,
+    &__rated,
+    &__text-next {
+        color: #000;
+        font-weight: 500;
+        line-height: 1.62;
+    }
+
+    &__text-next {
+        margin-left: 5px;
+    }
+
+    &__rated {
+        margin-left: 5px;
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+
+    &__stars {
+        @extend %flexItemCenter;
+        column-gap: 3px;
+        margin-left: auto;
+    }
+}
+
+.feedback-bottom {
+    padding: 220px 0 100px;
+    margin-top: -150px;
+    background: #e9f6ff;
+
+    @include abstracts.screen(xl) {
+        margin-top: -270px;
+    }
+
+    &__title,
+    &__desc {
+        margin: 30px auto 0;
+        text-align: center;
+    }
+
+    &__desc {
+        width: 25%;
+
+        @include abstracts.screen(xl) {
+            width: 27%;
+        }
+
+        @include abstracts.screen(lg) {
+            width: 33%;
+        }
+
+        @include abstracts.screen(md) {
+            width: 45%;
+        }
+
+        @include abstracts.screen(sm) {
+            width: 55%;
+        }
+
+        &--bot {
+            width: 100%;
+        }
+    }
+
+    &__link {
+        color: rgba(59, 209, 243, 0.903);
+    }
+
+    &__btn {
+        display: block;
+        margin: 20px auto;
+        width: 11%;
+
+        @include abstracts.screen(xl) {
+            width: 15%;
+        }
+
+        @include abstracts.screen(lg) {
+            width: 20%;
+        }
+
+        @include abstracts.screen(md) {
+            width: 30%;
+        }
+
+        @include abstracts.screen(sm) {
+            width: 40%;
+        }
+    }
+}

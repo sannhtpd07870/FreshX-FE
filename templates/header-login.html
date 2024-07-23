@@ -1,0 +1,107 @@
+<div class="container">
+    <div class="header__inner">
+        <a href="./index-logined.html" class="logo">
+            <img src="./assets/img/logo.png" alt="" class="logo__img" />
+            <h1 class="logo__text">Fresh X</h1>
+        </a>
+        <!-- Navbar PC -->
+        <nav class="header-navbar d-lg-none">
+            <ul class="header-navbar__list">
+                <li class="header-navbar__item">
+                    <a href="./index-logined.html" class="header-navbar__link"
+                        >Trang chủ</a
+                    >
+                </li>
+                <li class="header-navbar__item">
+                    <a href="./about-login.html" class="header-navbar__link"
+                        >Chúng tôi</a
+                    >
+                </li>
+                <li class="header-navbar__item">
+                    <a href="./chat.html" class="header-navbar__link">Chat</a>
+                </li>
+                <li class="header-navbar__item">
+                    <a href="#!" class="header-navbar__link">FAQ</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- Navigator mobile/tablet -->
+        <div class="navbar-mobile d-none d-lg-block">
+            <div class="navbar-mobile__wrap">
+                <button class="js-toggle" toggle-target="#navbar">
+                    <img src="./assets/icons/menu.svg" alt="" />
+                </button>
+                <p class="navbar-mobile__text">Menu</p>
+            </div>
+        </div>
+        <!-- Action -->
+        <div class="header-action">
+            <a href="./profile.html" class="header-action__container">
+                <img
+                    src="./assets/img/avt/avt2.png"
+                    alt=""
+                    class="header-action__avt d-lg-none"
+                />
+            </a>
+            <button
+                class="header-action__notice js-toggle"
+                toggle-target="#modal-message"
+            >
+                <img src="./assets/icons/bell.svg" alt="" />
+            </button>
+            <a href="./index.html" class="header-action__out">
+                <img
+                    src="./assets/icons/logout.svg"
+                    alt=""
+                    class="header-action__icon"
+                />
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: navbar mobile -->
+<div>
+    <div id="navbar" class="mobile hide d-none d-lg-block">
+        <a
+            href="./profile.html"
+            class="header-action__container d-none d-lg-flex"
+        >
+            <img
+                src="../assets/img/about/avt1.jpg"
+                alt=""
+                class="header-action__avt"
+            />
+            <h2 class="header-action__name">Nguyễn Văn Nhật</h2>
+        </a>
+        <ul class="header-navbar__list">
+            <li class="header-navbar__item">
+                <a href="./index-logined.html" class="header-navbar__link"
+                    >Trang chủ</a
+                >
+            </li>
+            <li class="header-navbar__item">
+                <a href="./about-login.html" class="header-navbar__link"
+                    >Chúng tôi</a
+                >
+            </li>
+            <li class="header-navbar__item">
+                <a href="./chat.html" class="header-navbar__link">Chat</a>
+            </li>
+            <li class="header-navbar__item">
+                <a href="#!" class="header-navbar__link">FAQ</a>
+            </li>
+        </ul>
+    </div>
+    <div class="mobile__overlay js-toggle" toggle-target="#navbar"></div>
+</div>
+
+<div id="modal-message" class="modal hide">
+    <div class="modal-container">
+        <img
+            src="./assets/icons/arrow-up.png"
+            alt=""
+            class="modal-container__icon"
+        />
+    </div>
+</div>
