@@ -184,7 +184,7 @@
                         </div>
                     </article>
                     <article class="col-9 col-md-12">
-                        <div class="chat-box">
+                        <div id="chat-box" class="chat-box">
                             <div
                                 id="chat-box__message"
                                 class="chat-box__message"
@@ -239,7 +239,8 @@
                                             class="chat-box__icon d-md-none"
                                         />
                                         <img
-                                            src="./assets/icons/cut.svg"
+                                            id="startVideoCall"
+                                            src="./assets/icons/video.svg"
                                             alt=""
                                             class="chat-box__icon d-md-none"
                                         />
@@ -283,6 +284,14 @@
                                     class="chat-box__container"
                                 ></div>
                             </div>
+                        </div>
+                        <div id="video-call-container" style="display: none"></div>
+                            <video
+                                class="chat-video"
+                                id="localVideo"
+                                autoplay
+                            ></video>
+                            <video class="chat-video" id="remoteVideo" autoplay></video>
                         </div>
                     </article>
 
