@@ -542,6 +542,56 @@ document.getElementById("clear").onclick = function () {
     chatContainer.innerHTML = "";
 };
 
+// JavaScript for video call
+document.getElementById("startVideoCall").onclick = async function () {
+    const videoCallContainer = document.getElementById("video-call-container");
+    const chatBox = document.getElementById("chat-box");
+    chatBox.style.display = "none";
+    videoCallContainer.style.display = "block";
+
+    const localVideo = document.getElementById("localVideo");
+    const remoteVideo = document.getElementById("remoteVideo");
+
+    // Get user media
+    const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+    });
+    localVideo.srcObject = stream;
+
+    // Set up peer connection
+    const peerConnection = new RTCPeerConnection();
+
+    // Add local stream tracks to peer connection
+    stream
+        .getTracks()
+        .forEach((track) => peerConnection.addTrack(track, stream));
+
+    // When receiving remote stream
+    peerConnection.ontrack = (event) => {
+        remoteVideo.srcObject = event.streams[0];
+    };
+
+    // Create and send offer to remote peer
+    const offer = await peerConnection.createOffer();
+    await peerConnection.setLocalDescription(offer);
+
+    // Mock signaling for simplicity; in production, use a signaling server
+    setTimeout(async () => {
+        const remoteOffer = peerConnection.localDescription; // In practice, send this to the remote peer
+
+        // Simulate remote peer connection
+        const remotePeerConnection = new RTCPeerConnection();
+        remotePeerConnection.ontrack = (event) => {
+            remoteVideo.srcObject = event.streams[0];
+        };
+        remotePeerConnection.setRemoteDescription(remoteOffer);
+        const answer = await remotePeerConnection.createAnswer();
+        await remotePeerConnection.setLocalDescription(answer);
+        peerConnection.setRemoteDescription(answer);
+    }, 1000);
+};
+
 //Chat message
 // function message(text) {
 //     return `<p

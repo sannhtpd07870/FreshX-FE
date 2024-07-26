@@ -3715,6 +3715,11 @@ strong {
   object-fit: cover;
 }
 
+.chat-video {
+  width: 100%;
+  height: 500px;
+}
+
 .auth {
   display: flex;
   min-height: 100vh;
