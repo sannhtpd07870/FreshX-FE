@@ -121,16 +121,12 @@
                             bạn có quyền truy cập vào tất cả đã lưu trước đó của
                             bạn thông tin.
                         </p>
-                        <form
-                            action="./index-logined.html"
-                            class="form auth__form"
-                        >
+                        <form id="loginForm" class="form auth__form">
                             <div class="form__group">
                                 <div class="form__text-input">
                                     <input
                                         type="email"
-                                        name=""
-                                        id=""
+                                        id="email"
                                         placeholder="Email"
                                         class="form__input"
                                         autofocus
@@ -155,8 +151,7 @@
                                 <div class="form__text-input">
                                     <input
                                         type="password"
-                                        name=""
-                                        id=""
+                                        id="password"
                                         placeholder="Mật khẩu"
                                         class="form__input"
                                         required
@@ -181,8 +176,6 @@
                                 <label class="form__checkbox">
                                     <input
                                         type="checkbox"
-                                        name=""
-                                        id=""
                                         class="form__checkbox-input d-none"
                                     />
                                     <span class="form__checkbox-label"
@@ -197,6 +190,8 @@
                             </div>
                             <div class="form__group auth__btn-group">
                                 <button
+                                    type="button"
+                                    onclick="login()"
                                     class="btn btn--primary auth__btn form__submit-btn"
                                 >
                                     Đăng nhập
@@ -220,5 +215,6 @@
                 </div>
             </main>
         </main>
+        <script src="./javascriot/loginEmp.js"></script>
     </body>
 </html>
