@@ -50,11 +50,18 @@
     margin-top: 36px;
     overflow-y: auto;
 
-    &__item {
+    &__item,
+    &__add {
         width: 80%;
         padding: 15px 10px;
         border: 1px solid #959595;
         border-radius: 20px;
+    }
+
+    &__add {
+        margin-top: 24px;
+        display: flex;
+        justify-content: center;
     }
 
     &__item + &__item {
