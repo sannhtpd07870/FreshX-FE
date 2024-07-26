@@ -374,6 +374,9 @@
 
 .message-image img {
     float: right;
-    width: 50%;
+    width: 60%;
+    clear: both;
+    float: right;
+    margin: 26px 0;
     object-fit: cover;
 }
