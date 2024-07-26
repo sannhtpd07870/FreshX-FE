@@ -4197,6 +4197,23 @@ strong {
   font-size: 3.2rem;
 }
 
+.patient-item {
+  width: 100%;
+  padding: 20px;
+  border-radius: 20px;
+  color: #fff;
+  background: #0fb5d9;
+  cursor: pointer;
+}
+.patient-item__name {
+  font-size: 1.8rem;
+  color: #e9f6ff;
+}
+.patient-item__desc {
+  margin-top: 6px;
+  line-height: 1.62;
+}
+
 .about-data__inner {
   display: flex;
   align-items: center;
