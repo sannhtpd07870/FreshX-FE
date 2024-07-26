@@ -3673,7 +3673,7 @@ strong {
   position: relative;
   clear: both;
   float: right;
-  margin: 8px 0;
+  margin: 26px 0;
   padding: 6px 10px 7px;
   background: #0fb5d9;
   font-size: 1.6rem;
@@ -3704,6 +3704,12 @@ strong {
   border-radius: 99px;
   color: #0fb5d9;
   background: #fff;
+}
+
+.message-image img {
+  float: right;
+  width: 50%;
+  object-fit: cover;
 }
 
 .auth {
