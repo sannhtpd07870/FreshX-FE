@@ -3668,7 +3668,7 @@ strong {
   position: relative;
   clear: both;
   float: right;
-  margin: 8px 0;
+  margin: 16px 0;
   padding: 6px 10px 7px;
   background: #0fb5d9;
   font-size: 1.6rem;
@@ -3688,6 +3688,8 @@ strong {
   position: relative;
   float: left;
   border-radius: 10px 10px 10px 0;
+  background: #08829d;
+  color: #ebebeb;
 }
 .chat-message__text--AI:nth-child(2) {
   animation-name: delay1;
