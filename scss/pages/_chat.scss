@@ -7,6 +7,7 @@
 
 .chat {
     overflow: hidden;
+    height: 85vh;
     &__container {
         height: 85.3vh;
         @extend %flexItemCenter;
@@ -384,7 +385,7 @@
     object-fit: cover;
 }
 
-.chat-video {
-    width: 100%;
-    height: 500px;
-}
+// .chat-video {
+//     width: 100%;
+//     height: 500px;
+// }
