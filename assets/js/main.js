@@ -75,6 +75,7 @@ document.getElementById("out-chat").onclick = function () {
     this.style.display = "none";
     document.getElementById("chat-block").style.display = "flex";
     document.getElementById("chat-box__message").style.display = "block";
+    document.getElementById("chat-block__add").style.display = "flex";
     document.getElementById("chat-container").style.display = "none";
     document.getElementById("diagnostic").innerHTML = "";
 };
@@ -88,6 +89,7 @@ for (let index = 0; index < arr.length; index++) {
         document.getElementById("chat-block").style.display = "none";
         document.getElementById("chat-box__message").style.display = "none";
         document.getElementById("chat-container").style.display = "flex";
+        document.getElementById("chat-block__add").style.display = "none";
     };
 }
 
