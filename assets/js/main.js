@@ -60,50 +60,56 @@ async function fetchData() {
 // Gọi hàm fetchData khi trang được tải
 window.onload = fetchData;
 
-// Chat History
-// async function history() {
-//     try {
-//         // URL của API
-//         const apiUrl = "https://freshx-api.azurewebsites.net/api/ChatSession/5"; // Thay thế bằng URL API của bạn
+document.addEventListener("DOMContentLoaded", () => {
+    const lichSu = document.getElementById("lichSu");
+    lichSu.addEventListener("click", async () => {
+        await fetchData();
+    });
 
-//         // Gọi API
-//         const response = await fetch(apiUrl);
+    async function fetchData() {
+        try {
+            const apiUrl =
+                "https://freshx-api.azurewebsites.net/api/ChatSession/5";
+            const response = await fetch(apiUrl);
 
-//         if (!response.ok) {
-//             throw new Error(`HTTP error! status: ${response.status}`);
-//         }
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
 
-//         const data = await response.json();
+            const data = await response.json();
+            const chat = document.getElementById("chat");
+            chat.innerHTML = "";
 
-//         // Lấy phần tử với id="chat-block"
-//         const chatHistory = document.getElementById("lichSu");
-
-//         // Xóa nội dung cũ (nếu có)
-//         chatHistory.innerHTML = "";
-
-//         // Duyệt qua mỗi mục dữ liệu và cập nhật nội dung
-//         data.forEach((item) => {
-//             const chat = document.querySelectorAll(".chat-history__mess");
-//             if (item.sender === "AI") {
-//                 chat.classList.add("chat-message__text--AI");
-//             } else {
-//                 chat.classList.add("chat-message__text");
-//             }
-
-//             chatHistory.innerHTML += `
-//                 <article class="chat-history">
-//                     <p class="chat-history__mess">${item.sender}</p>
-//                     <p class="chat-history__mess">${item.message}</p>
-//                     <p class="chat-history__mess"></p>
-//                 </article>
-//             `;
-//         });
-//     } catch (error) {
-//         console.error("Lỗi khi gọi API:", error);
-//     }
-// }
-// // Gọi hàm fetchData khi trang được tải
-// window.onload = history;
+            if (data && Array.isArray(data.chatMessages)) {
+                data.chatMessages.forEach((item) => {
+                    const chatClass =
+                        item.sender === "AI"
+                            ? "chat-message__text--AI chat-message__text"
+                            : "chat-message__text";
+                    chat.innerHTML += `
+                        <article class="chat-block__item">
+                            <p class="${chatClass}">${
+                        item.message || "Không có nội dung"
+                    }</p>
+                            <p class="chat-block__date">
+                                Ngày: ${new Date(
+                                    item.timestamp
+                                ).toLocaleDateString()}
+                                <span class="chat-block__time">${new Date(
+                                    item.timestamp
+                                ).toLocaleTimeString()}</span>
+                            </p>
+                        </article>
+                    `;
+                });
+            } else {
+                chat.innerHTML += "<p>Không có dữ liệu chat để hiển thị.</p>";
+            }
+        } catch (error) {
+            console.error("Lỗi khi gọi API:", error);
+        }
+    }
+});
 
 /**
  * JS toggle
@@ -178,6 +184,47 @@ for (let index = 0; index < arr.length; index++) {
         document.getElementById("chat-block__add").style.display = "none";
     };
 }
+
+// function lichSu() {
+//     const fakeAPI = {
+//         id: 5,
+//         customerId: 3,
+//         employeeId: 3,
+//         startTime: "2024-07-26T12:03:03.477",
+//         endTime: "2024-07-26T12:05:48.1529673",
+//         chatMessages: [
+//             {
+//                 id: 12,
+//                 customerId: null,
+//                 employeeId: null,
+//                 sender: "user",
+//                 message: "a",
+//                 messageType: "text",
+//                 timestamp: "2024-07-27T05:17:48.919",
+//                 imageUrl: "String",
+//             },
+//             {
+//                 id: 13,
+//                 customerId: null,
+//                 employeeId: null,
+//                 sender: "user",
+//                 message: "dada",
+//                 messageType: "text",
+//                 timestamp: "2024-07-27T05:44:41.136",
+//                 imageUrl: "String",
+//             },
+//         ],
+//     };
+
+//     let chatHistory = "";
+//     fakeAPI.chatMessages.forEach((item) => {
+//         chatHistory += `<p><strong>${item.sender}:</strong> ${item.message} <em>(${item.timestamp})</em></p>`;
+//     });
+//     return chatHistory;
+// }
+// document.getElementById("lichSu").onclick = function () {
+//     document.getElementById("diagnostic").innerHTML = lichSu();
+// };
 
 function chanDoan() {
     return `<p class="chat-box__text">
