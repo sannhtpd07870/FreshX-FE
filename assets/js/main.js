@@ -19,6 +19,92 @@ fetch(loginAPI)
         console.log("Co loi!");
     });
 
+// Chat block
+async function fetchData() {
+    try {
+        // URL của API
+        const apiUrl = "https://freshx-api.azurewebsites.net/api/ChatSession"; // Thay thế bằng URL API của bạn
+
+        // Gọi API
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Lấy phần tử với id="chat-block"
+        const chatBlock = document.getElementById("chat-block");
+
+        // Xóa nội dung cũ (nếu có)
+        chatBlock.innerHTML = "";
+
+        // Duyệt qua mỗi mục dữ liệu và cập nhật nội dung
+        data.forEach((item) => {
+            chatBlock.innerHTML += `
+                <article class="chat-block__item">
+                    <h3 class="chat-block__title">Tư vấn: ${item.title}</h3>
+                    <p class="chat-block__diagnostic">Chuẩn đoán: Lorem ipsum</p>
+                    <p class="chat-block__status">Tình trạng: Lorem ipsum</p>
+                    <p class="chat-block__date">
+                       ${item.startTime}
+                    </p>
+                </article>
+            `;
+        });
+    } catch (error) {
+        console.error("Lỗi khi gọi API:", error);
+    }
+}
+// Gọi hàm fetchData khi trang được tải
+window.onload = fetchData;
+
+// Chat History
+// async function history() {
+//     try {
+//         // URL của API
+//         const apiUrl = "https://freshx-api.azurewebsites.net/api/ChatSession/5"; // Thay thế bằng URL API của bạn
+
+//         // Gọi API
+//         const response = await fetch(apiUrl);
+
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+
+//         const data = await response.json();
+
+//         // Lấy phần tử với id="chat-block"
+//         const chatHistory = document.getElementById("lichSu");
+
+//         // Xóa nội dung cũ (nếu có)
+//         chatHistory.innerHTML = "";
+
+//         // Duyệt qua mỗi mục dữ liệu và cập nhật nội dung
+//         data.forEach((item) => {
+//             const chat = document.querySelectorAll(".chat-history__mess");
+//             if (item.sender === "AI") {
+//                 chat.classList.add("chat-message__text--AI");
+//             } else {
+//                 chat.classList.add("chat-message__text");
+//             }
+
+//             chatHistory.innerHTML += `
+//                 <article class="chat-history">
+//                     <p class="chat-history__mess">${item.sender}</p>
+//                     <p class="chat-history__mess">${item.message}</p>
+//                     <p class="chat-history__mess"></p>
+//                 </article>
+//             `;
+//         });
+//     } catch (error) {
+//         console.error("Lỗi khi gọi API:", error);
+//     }
+// }
+// // Gọi hàm fetchData khi trang được tải
+// window.onload = history;
+
 /**
  * JS toggle
  *
@@ -81,7 +167,7 @@ document.getElementById("out-chat").onclick = function () {
 };
 
 var arr = [];
-arr = document.getElementsByClassName("chat-block__item");
+arr = document.getElementsByClassName("chat-block");
 for (let index = 0; index < arr.length; index++) {
     const element = arr[index];
     element.onclick = function () {
@@ -379,7 +465,7 @@ document.getElementById("luuY").onclick = function () {
 };
 
 function datLich() {
-    return `  <div class="row g-3">
+    return `<div class="row g-3">
     <div class="col-6">
         <div
             class="chat-box__container-wrap chat-box__container-wrap--other"
@@ -461,6 +547,7 @@ function datLich() {
     </div>
 </div>`;
 }
+
 document.getElementById("datLich").onclick = function () {
     document.getElementById("diagnostic").innerHTML = datLich();
 
@@ -544,45 +631,6 @@ document.getElementById("clear").onclick = function () {
     chatContainer.innerHTML = "";
 };
 
-//Chat message
-// function message(text) {
-//     return `<p
-//     id="messageUser"
-//     class="chat-message__text"
-// >${text}</p>`;
-// }
-
-// let i = [0];
-// document.getElementById("send").onclick = function () {
-//     let mess = document.getElementById("inputMessage").value;
-//     document.getElementById("chat-box__wrap").style.display = "none";
-//     document.getElementById("inputMessage").value = "";
-//     document.getElementById("chat").innerHTML += message(mess);
-
-//     document.getElementById("chat").innerHTML += messageAI(fakeAI[i]);
-//     i++;
-
-//     document.getElementById("dauBung").onclick = function () {
-//         document.getElementById("chat-block").style.display = "flex";
-//     };
-// };
-
-//Fake AI
-// function messageAI(text) {
-//     return `<p
-//     id="messageAI"
-//     class="chat-message__text chat-message__text--AI"
-// >${text}</p>`;
-// }
-
-// let fakeAI = [
-//     "Chào bạn, tôi có thể giúp gì cho bạn ?",
-//     "Bạn có thể cho tôi biết bạn bị đau ở vị trí nào không ?",
-//     'Dựa vào triệu chứng bạn đưa ra, chúng tôi đã phát hiện ra rằng bạn có thể bị mắc phải một số vấn đề liên quan đến đau bụng dưới. Chúng tôi khuyên bạn nên tham khảo ý kiến của bác sĩ để được kiểm tra và chẩn đoán chính xác. Ngoài ra, bạn cũng có thể tham khảo một số lời khuyên sau đây: "Rửa tay sạch trước khi ăn và chế biến thực phẩm". Chúc bạn sức khỏe!',
-//     'Nhấn vào đây để xem mô tả <button id="dauBung" class="chat-message__btn">Nhấn vào đây</button>',
-//     "Cảm ơn bạn, bạn có thể xem phần chuẩn đoán ở bên trái để biết rõ hơn bệnh của mình nhé",
-// ];
-
 //Modal
 document.addEventListener("click", ({ target }) => {
     if (
@@ -603,4 +651,75 @@ for (let i = 0; i < icon.length; i++) {
         current[0].className = current[0].className.replace(" active", "");
         this.className += " active";
     });
+}
+
+//Send button messenger
+function sendMessage() {
+    const userInput = document.getElementById("inputMessage").value.trim();
+    document.getElementById("inputMessage").value = "";
+    if (userInput !== "") {
+        addUserMessage(userInput);
+        fetch("http://127.0.0.1:5000/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                message: userInput,
+                chat_history: getChatHistory(),
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                addAIMessage(data.response);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    }
+}
+
+document.getElementById("sendButton").addEventListener("click", sendMessage);
+document
+    .getElementById("inputMessage")
+    .addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            sendMessage();
+        }
+    });
+
+function addUserMessage(message) {
+    const chatHistory = document.getElementById("chat");
+    const userMessageDiv = document.createElement("p");
+    userMessageDiv.className = "chat-message__text";
+    userMessageDiv.textContent = message;
+    chatHistory.appendChild(userMessageDiv);
+}
+
+function addAIMessage(message) {
+    const chatHistory = document.getElementById("chat");
+    const aiMessageDiv = document.createElement("p");
+    aiMessageDiv.className = "chat-message__text chat-message__text--AI";
+    aiMessageDiv.textContent = message;
+    chatHistory.appendChild(aiMessageDiv);
+}
+
+function getChatHistory() {
+    const chatHistory = [];
+    document.querySelectorAll("#chat > p").forEach((p) => {
+        const role = p.className.includes("chat-message__text--AI")
+            ? "ai"
+            : "human";
+        chatHistory.push({
+            role,
+            content: p.textContent,
+        });
+    });
+    return chatHistory;
 }
