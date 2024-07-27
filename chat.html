@@ -432,12 +432,12 @@
                                                                 {
                                                                     chatSessionId: 5, // Replace with actual session ID
                                                                     customerId: localStorage.getItem("customerId"), // Replace with actual customer ID
-                                                                    employeeId: 0,
+                                                                    employeeId: 3,
                                                                     sender: "AI",
                                                                     message: message.content,
                                                                     messageType: "text",
                                                                     timestamp:
-                                                                        new Date().toISOString(),
+                                                                        new Date(),
                                                                     imageUrl: null,
                                                                 }
                                                             ),
@@ -481,12 +481,12 @@
                                             body: JSON.stringify({
                                                 chatSessionId: 5, // Replace with actual session ID
                                                 customerId: localStorage.getItem("customerId"), // Replace with actual customer ID
-                                                employeeId: 0,
+                                                employeeId: 3,
                                                 sender: "user",
                                                 message: userInput,
                                                 messageType: "text",
                                                 timestamp:
-                                                    new Date().toISOString(),
+                                                    new Date(),
                                                 imageUrl: null,
                                             }),
                                         }
