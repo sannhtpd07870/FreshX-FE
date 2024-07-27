@@ -112,9 +112,9 @@
                                     nhatnvpd07532@fpt.edu.vn
                                 </p>
                             </article>
-                            <article id="chat-block" class="chat-block">
+                            <!-- <article id="chat-block" class="chat-block"> -->
                                 <!-- Chat Item 1 -->
-                                <a href="#!" class="chat-block__item">
+                                <!-- <a href="#!" class="chat-block__item">
                                     <h3 class="chat-block__title">
                                         Tư vấn: AI văn bản
                                     </h3>
@@ -131,9 +131,9 @@
                                         </span>
                                     </p>
                                 </a>
-                            </article>
+                            </article> -->
                             <!-- clear -->
-                            <article class="chat-block__add">
+                            <!-- <article class="chat-block__add">
                                 <button id="clear">
                                     <img
                                         src="./assets/icons/plus.svg"
@@ -142,6 +142,8 @@
                                     />
                                 </button>
                             </article>
+                             -->
+
                             
                             <article id="chat-container" class="chat-container">
                                 <!-- Chat Container Item 1 -->
@@ -188,7 +190,7 @@
                         </div>
                     </article>
                     <article class="col-9 col-md-12">
-                        <div class="chat-box">
+                        <div id="chat-box" class="chat-box">
                             <div
                                 id="chat-box__message"
                                 class="chat-box__message"
@@ -243,7 +245,8 @@
                                             class="chat-box__icon d-md-none"
                                         />
                                         <img
-                                            src="./assets/icons/cut.svg"
+                                            id="startVideoCall"
+                                            src="./assets/icons/video.svg"
                                             alt=""
                                             class="chat-box__icon d-md-none"
                                         />
@@ -288,7 +291,78 @@
                                 ></div>
                             </div>
                         </div>
-                    </article>
+                        <div id="video-call-container" style="display: none"></div>
+                            <video
+                            class="chat-video"
+                            id="localVideo"
+                            autoplay
+                        ></video>
+                        <!-- <video class="chat-video" id="remoteVideo" autoplay></video> -->
+                    </div>
+                </article>
+                    <script>
+                        document.getElementById("clear").addEventListener("click", async () => {
+                            try {
+                                // Gọi API tạo ChatSession
+                                const token = localStorage.getItem("token");
+                                const response = await fetch("https://your-api-url/api/ChatSession", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "Authorization": `Bearer ${token}`
+                                    },
+                                    body: JSON.stringify({
+                                        status: "active" // Trạng thái phiên chat
+                                    })
+                                });
+
+                                if (!response.ok) {
+                                    throw new Error("Failed to create chat session");
+                                }
+
+                                const chatSession = await response.json();
+
+                                // Gọi API lấy dữ liệu ChatSession
+                                const getResponse = await fetch("https://your-api-url/api/ChatSession", {
+                                    method: "GET",
+                                    headers: {
+                                        "Authorization": `Bearer ${token}`
+                                    }
+                                });
+
+                                if (!getResponse.ok) {
+                                    throw new Error("Failed to fetch chat sessions");
+                                }
+
+                                const chatSessions = await getResponse.json();
+
+                                // Cập nhật giao diện với dữ liệu ChatSession
+                                const chatBlock = document.getElementById("chat-block");
+                                chatBlock.innerHTML = ""; // Xóa nội dung cũ
+
+                                chatSessions.forEach(session => {
+                                    const sessionElement = document.createElement("a");
+                                    sessionElement.href = "#!";
+                                    sessionElement.classList.add("chat-block__item");
+
+                                    sessionElement.innerHTML = `
+                                        <h3 class="chat-block__title">Tư vấn: AI văn bản</h3>
+                                        <p class="chat-block__diagnostic">Chuẩn đoán: ${session.diagnostic}</p>
+                                        <p class="chat-block__status">Tình trạng: ${session.status}</p>
+                                        <p class="chat-block__date">Ngày: ${new Date(session.startTime).toLocaleDateString()}
+                                            <span class="chat-block__time">${new Date(session.startTime).toLocaleTimeString()}</span>
+                                        </p>
+                                    `;
+
+                                    chatBlock.appendChild(sessionElement);
+                                });
+                            } catch (error) {
+                                console.error(error);
+                                alert("Có lỗi xảy ra khi tạo phiên chat hoặc lấy dữ liệu phiên chat.");
+                            }
+                        });
+                    </script>
+
                     <script>
                         async function sendMessage() {
                             const userInput = document
@@ -298,6 +372,7 @@
                             if (userInput !== "") {
                                 addUserMessage(userInput);
 
+                                // Send message to Coze API
                                 try {
                                     const response = await fetch(
                                         "https://api.coze.com/open_api/v2/chat",
@@ -327,18 +402,55 @@
                                         data.messages &&
                                         Array.isArray(data.messages)
                                     ) {
-                                        // Chỉ lấy những message có type là "answer"
                                         const filteredMessages =
                                             data.messages.filter(
                                                 (message) =>
                                                     message.type === "answer"
                                             );
 
-                                        filteredMessages.forEach((message) => {
-                                            addAIMessage(message.content);
-                                        });
+                                        filteredMessages.forEach(
+                                            async (message) => {
+                                                addAIMessage(message.content);
 
-                                        // Kích hoạt sự kiện cho các biểu tượng cảm xúc
+                                                // Send message to ChatMessage API
+                                                try {
+                                                    await fetch(
+                                                        "https://freshx-api.azurewebsites.net/api/ChatMessage",
+                                                        {
+                                                            method: "POST",
+                                                            headers: {
+                                                                "Content-Type":
+                                                                    "application/json",
+                                                                Authorization:
+                                                                    "Bearer " +
+                                                                    localStorage.getItem(
+                                                                        "token"
+                                                                    ),
+                                                            },
+                                                            body: JSON.stringify(
+                                                                {
+                                                                    chatSessionId: 5, // Replace with actual session ID
+                                                                    customerId: localStorage.getItem("customerId"), // Replace with actual customer ID
+                                                                    employeeId: 0,
+                                                                    sender: "AI",
+                                                                    message: message.content,
+                                                                    messageType: "text",
+                                                                    timestamp:
+                                                                        new Date().toISOString(),
+                                                                    imageUrl: null,
+                                                                }
+                                                            ),
+                                                        }
+                                                    );
+                                                } catch (error) {
+                                                    console.error(
+                                                        "Error sending message to ChatMessage API:",
+                                                        error
+                                                    );
+                                                }
+                                            }
+                                        );
+
                                         activateIcons();
                                     } else {
                                         console.error(
@@ -348,6 +460,41 @@
                                     }
                                 } catch (error) {
                                     console.error("Error:", error);
+                                }
+
+                                // Send user message to ChatMessage API
+                                try {
+                                    await fetch(
+                                        "https://freshx-api.azurewebsites.net/api/ChatMessage",
+                                        {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type":
+                                                    "application/json",
+                                                Authorization:
+                                                    "Bearer " +
+                                                    localStorage.getItem(
+                                                        "token"
+                                                    ),
+                                            },
+                                            body: JSON.stringify({
+                                                chatSessionId: 5, // Replace with actual session ID
+                                                customerId: localStorage.getItem("customerId"), // Replace with actual customer ID
+                                                employeeId: 0,
+                                                sender: "user",
+                                                message: userInput,
+                                                messageType: "text",
+                                                timestamp:
+                                                    new Date().toISOString(),
+                                                imageUrl: null,
+                                            }),
+                                        }
+                                    );
+                                } catch (error) {
+                                    console.error(
+                                        "Error sending message to ChatMessage API:",
+                                        error
+                                    );
                                 }
                             }
                         }
@@ -380,7 +527,6 @@
                                 "chat-message__text chat-message__text--AI";
                             aiMessageDiv.textContent = message;
 
-                            // Thêm các icon vào đoạn chat
                             const iconsDiv = document.createElement("div");
                             iconsDiv.className = "chat-message__icons";
                             iconsDiv.innerHTML = `
@@ -399,11 +545,9 @@
                             );
                             icons.forEach((icon) => {
                                 icon.addEventListener("click", function () {
-                                    // Loại bỏ lớp "active" khỏi tất cả các biểu tượng
                                     icons.forEach((i) =>
                                         i.classList.remove("active")
                                     );
-                                    // Thêm lớp "active" vào biểu tượng được nhấp
                                     this.classList.add("active");
                                 });
                             });
@@ -427,7 +571,6 @@
                             return chatHistory;
                         }
 
-                        // Kích hoạt sự kiện cho các biểu tượng cảm xúc khi tải trang
                         activateIcons();
                     </script>
                     <script src="./javascript/chat.js"></script>

@@ -19,10 +19,12 @@ async function login() {
     if (response.ok) {
         const data = await response.json();
         alert("Đăng nhập thành công");
+        // Lưu token và customerId vào localStorage hoặc sessionStorage nếu cần
         localStorage.setItem("token", data.token);
+        localStorage.setItem("customerId", data.customerId);
+        // Chuyển hướng tới trang khác sau khi đăng nhập thành công
         window.location.href = "./index-logined.html";
     } else {
-        const error = await response.json();
-        alert(`Đăng nhập thất bại: ${error.message}`);
+        alert("Đăng nhập thất bại");
     }
 }
